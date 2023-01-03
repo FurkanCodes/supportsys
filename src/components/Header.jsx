@@ -3,7 +3,7 @@ import { AiOutlineLogin, AiOutlineUser } from "react-icons/ai";
 function Header() {
   return (
     <>
-      <div className="container flex flex-col flex-wrap items-center justify-between py-5 mx-auto md:flex-row max-w-7xl tails-selected-element">
+      <div className="container flex flex-col flex-wrap items-center justify-between py-5 mx-auto md:px-10 md:flex-row max-w-7xl ">
         <div className="relative flex flex-col md:flex-row">
           <a
             href="#_"
