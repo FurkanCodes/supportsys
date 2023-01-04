@@ -1,7 +1,11 @@
 import React from "react";
 import { AiFillLock } from "react-icons/ai";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import { useSelector, useDispatch } from "react-redux";
+import { register, reset } from "../features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
+
 function Register() {
   const [formData, setFormData] = useState({
     name: "",
@@ -11,6 +15,24 @@ function Register() {
   });
 
   const { name, email, password, password2 } = formData;
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user, isLoading, isSuccess, message, isError } = useSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+
+    //redirect
+    if (isSuccess || user) {
+      navigate("/");
+    }
+    dispatch(reset());
+  }, [isError, isSuccess, user, message, navigate, dispatch]);
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -20,13 +42,22 @@ function Register() {
 
   const onSubmit = (e) => {
     e.preventDefault();
+
     if (password !== password2) {
       toast.error("Passwords are not match");
+    } else {
+      const userData = {
+        name,
+        email,
+        password,
+      };
+
+      dispatch(register(userData));
     }
   };
   return (
     <>
-      <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="flex items-center justify-center min-h-full px-4 py-12 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8">
           <div>
             <a
@@ -40,7 +71,7 @@ function Register() {
                 </span>
               </span>
             </a>
-            <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+            <h2 className="mt-6 text-3xl font-bold tracking-tight text-center text-gray-900">
               Please create an account
             </h2>
           </div>
@@ -60,7 +91,7 @@ function Register() {
                   onChange={onChange}
                   value={name}
                   required
-                  className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                  className="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-t-md focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   placeholder="Enter your name"
                 />
               </div>
@@ -76,7 +107,7 @@ function Register() {
                   onChange={onChange}
                   value={email}
                   required
-                  className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                  className="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-t-md focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   placeholder="Email address"
                 />
               </div>
@@ -92,7 +123,7 @@ function Register() {
                   onChange={onChange}
                   value={password}
                   required
-                  className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                  className="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-b-md focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   placeholder="Password"
                 />
               </div>
@@ -108,7 +139,7 @@ function Register() {
                   onChange={onChange}
                   value={password2}
                   required
-                  className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                  className="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-b-md focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   placeholder="Confirm password"
                 />
               </div>
@@ -120,11 +151,11 @@ function Register() {
                   id="remember-me"
                   name="remember-me"
                   type="checkbox"
-                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                  className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
                 />
                 <label
                   htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-900"
+                  className="block ml-2 text-sm text-gray-900"
                 >
                   Remember me
                 </label>
@@ -143,11 +174,11 @@ function Register() {
             <div>
               <button
                 type="submit"
-                className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                className="relative flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md group hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
                 <span className="absolute inset-y-0 left-0 flex items-center pl-3">
                   <AiFillLock
-                    className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
+                    className="w-5 h-5 text-indigo-500 group-hover:text-indigo-400"
                     aria-hidden="true"
                   />
                 </span>
