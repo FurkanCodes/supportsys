@@ -53,18 +53,14 @@ function Login() {
       <div className="flex items-center justify-center min-h-full px-4 py-12 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8">
           <div>
-            <a
-              href="/"
-              className="flex items-center mb-5 font-medium text-gray-900 lg:w-auto lg:items-center lg:justify-center md:mb-0"
-            >
-              <span className="mx-auto text-xl font-black leading-none text-gray-900 select-none">
+            {/* <span className="mx-auto text-xl font-black leading-none text-gray-900 select-none">
                 supportsys
                 <span className="text-indigo-600" data-primary="indigo-600">
-                  .
-                </span>
-              </span>
-            </a>
-            <h2 className="mt-6 text-3xl font-bold tracking-tight text-center text-gray-900">
+                  . */}
+            {/* </span>
+              </span> */}
+
+            <h2 className="text-3xl font-bold tracking-tight text-center text-gray-900 ">
               Login to your account
             </h2>
           </div>

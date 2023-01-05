@@ -1,11 +1,10 @@
 import React from "react";
-import Header from "../components/Header";
+
 import { FaTicketAlt, FaQuestionCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 function Home() {
   return (
     <>
-      <Header />
       <section className="h-auto bg-white">
         <div className="max-w-7xl mx-auto py-4 px-10  sm:px-6 lg:px-8 sm:text-center ">
           <p className="mt-1 font-extrabold text-gray-900 sm:text-3xl sm:tracking-tight lg:text-4xl">

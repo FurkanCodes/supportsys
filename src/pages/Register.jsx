@@ -60,7 +60,7 @@ function Register() {
       <div className="flex items-center justify-center min-h-full px-4 py-12 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8">
           <div>
-            <a
+            {/* <a
               href="/"
               className="flex items-center mb-5 font-medium text-gray-900 lg:w-auto lg:items-center lg:justify-center md:mb-0"
             >
@@ -70,8 +70,8 @@ function Register() {
                   .
                 </span>
               </span>
-            </a>
-            <h2 className="mt-6 text-3xl font-bold tracking-tight text-center text-gray-900">
+            </a> */}
+            <h2 className="text-3xl font-bold tracking-tight text-center text-gray-900 ">
               Please create an account
             </h2>
           </div>
