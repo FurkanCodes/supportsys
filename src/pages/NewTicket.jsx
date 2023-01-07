@@ -1,19 +1,49 @@
 import React from "react";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import BackButton from "../components/BackButton";
+import { createTicket, reset } from "../features/tickets/ticketSlice";
+
 function NewTicket() {
   const { user } = useSelector((state) => state.auth);
+  const { isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.tickets
+  );
+
   const [name] = useState(user.name);
   const [email] = useState(user.email);
   const [issue, setIssue] = useState("");
   const [description, setDescription] = useState("");
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+    if (isSuccess) {
+      dispatch(reset());
+      navigate("/tickets");
+    }
+    dispatch(reset());
+  }, [dispatch, navigate, isError, isSuccess, message]);
+
   const onSubmit = (e) => {
     e.preventDefault();
+    dispatch(createTicket({ issue, description }));
   };
 
+  if (isLoading) {
+    return <div>Loading</div>;
+  }
   return (
     <>
+      <div>
+        <BackButton url="/" />
+      </div>
       <section className="py-3 text-center">
         <h2 className="mt-1 font-extrabold text-gray-900 sm:text-3xl sm:tracking-tight lg:text-4xl">
           Create New Ticket
@@ -66,7 +96,6 @@ function NewTicket() {
 
               <option value="cirriculum">Cirriculum</option>
               <option value="teacher">Teacher</option>
-              <option value="hr">HR</option>
             </select>
           </form>
           <div>
