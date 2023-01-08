@@ -8,8 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "start": "node backend/server.js",
-    "server": "nodemon backend/server.js",
-    "render-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
+    "server": "nodemon backend/server.js"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.1",
