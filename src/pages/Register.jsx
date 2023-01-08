@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import { register, reset } from "../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
-
+import BackButton from "../components/BackButton";
 function Register() {
   const [formData, setFormData] = useState({
     name: "",
@@ -71,6 +71,7 @@ function Register() {
                 </span>
               </span>
             </a> */}
+            <BackButton url={"/"} />
             <h2 className="text-3xl font-bold tracking-tight text-center text-gray-900 ">
               Please create an account
             </h2>

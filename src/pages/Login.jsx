@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { login, reset } from "../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
+import BackButton from "../components/BackButton";
 function Login() {
   const [formData, setFormData] = useState({
     email: "",
@@ -59,7 +59,7 @@ function Login() {
                   . */}
             {/* </span>
               </span> */}
-
+            <BackButton url={"/"} />
             <h2 className="text-3xl font-bold tracking-tight text-center text-gray-900 ">
               Login to your account
             </h2>
