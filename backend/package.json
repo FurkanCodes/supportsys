@@ -4,18 +4,15 @@
   "version": "0.0.0",
   "type": "commonjs",
   "scripts": {
-    "dev": "concurrently \"vite\" \"npm run server\"",
+    "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "start": "node src/backend/server.js",
-    "server": "nodemon src/backend/server.js"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.1",
     "axios": "^1.2.2",
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
-    "concurrently": "^7.6.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
@@ -43,7 +40,7 @@
     "tailwindcss": "^3.2.4",
     "vite": "^4.0.0"
   },
-  "main": "backend/server.js",
+  "main": "server.js",
   "author": "",
   "license": "ISC",
   "description": ""
