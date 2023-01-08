@@ -41,7 +41,7 @@ function Ticket() {
 
           <span
             className={`float-right font-bold px-6 py-4 ${
-              ticket.status === "new"
+              ticket.status === "open"
                 ? " text-white  bg-green-500"
                 : " text-gray-100 bg-red-600"
             }`}
@@ -66,9 +66,32 @@ function Ticket() {
           </div>
         </div>
       </header>
-      {ticket !== "closed" && (
-        <button onClick={onTicketClose}>close ticket</button>
-      )}
+      <div>
+        {ticket.status === "open" ? (
+          <button
+            className="w-full px-4 py-2 my-4 font-bold text-white bg-red-500 border-b-4 border-red-700 rounded hover:bg-red-400 hover:border-red-500"
+            onClick={onTicketClose}
+          >
+            close ticket
+          </button>
+        ) : (
+          <button
+            disabled
+            className="w-full px-4 py-2 my-4 font-bold text-white bg-red-500 border-b-4 border-red-700 rounded cursor-not-allowed"
+            onClick={onTicketClose}
+          >
+            <h2>ticket already closed</h2>
+          </button>
+        )}
+      </div>
+      {/* {ticket !== "closed" && (
+        <button
+          className="w-full px-4 py-2 my-4 font-bold text-white bg-red-500 border-b-4 border-red-700 rounded hover:bg-red-400 hover:border-red-500"
+          onClick={onTicketClose}
+        >
+          close ticket
+        </button>
+      )} */}
     </div>
   );
 }

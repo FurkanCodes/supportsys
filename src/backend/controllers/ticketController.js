@@ -62,7 +62,7 @@ const createTicket = asyncHandler(async (req, res) => {
     issue,
     description,
     user: req.user.id,
-    status: "new",
+    status: "open",
   });
 
   res.status(200).json(ticket);
