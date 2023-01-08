@@ -8,14 +8,26 @@ const initialState = {
   message: "",
 };
 
-//get one Ticket
-// Get ticket notes
+// Get ticket comments
 export const getComments = createAsyncThunk(
   "comments/getAll",
   async (ticketId, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
       return await commentService.getComments(ticketId, token);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(extractErrorMessage(error));
+    }
+  }
+);
+
+// create  comment
+export const createComment = createAsyncThunk(
+  "comments/create",
+  async ({ commentText, ticketId }, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await commentService.createComment(commentText, ticketId, token);
     } catch (error) {
       return thunkAPI.rejectWithValue(extractErrorMessage(error));
     }
@@ -39,6 +51,19 @@ export const commentSlice = createSlice({
           (state.comments = action.payload);
       })
       .addCase(getComments.rejected, (state, action) => {
+        (state.isLoading = false),
+          (state.isError = true),
+          (state.message = action.payload);
+      })
+      .addCase(createComment.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createComment.fulfilled, (state, action) => {
+        (state.isLoading = false),
+          (state.isSuccess = true),
+          state.comments.push(action.payload);
+      })
+      .addCase(createComment.rejected, (state, action) => {
         (state.isLoading = false),
           (state.isError = true),
           (state.message = action.payload);

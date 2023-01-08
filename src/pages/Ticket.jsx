@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getTicket, closeTicket } from "../features/tickets/ticketSlice";
-import { getComments, reset } from "../features/comments/commentsSlice";
+import {
+  getComments,
+  reset,
+  createComment,
+} from "../features/comments/commentsSlice";
 import { useParams, useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton";
 import { toast } from "react-toastify";
@@ -51,6 +55,7 @@ function Ticket() {
   };
   const onCommentSubmit = (e) => {
     e.preventDefault();
+    dispatch(createComment({ commentText, ticketId }));
     console.log("Submit");
     closeModal();
   };
