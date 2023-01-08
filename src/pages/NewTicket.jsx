@@ -14,7 +14,7 @@ function NewTicket() {
 
   const [name] = useState(user.name);
   const [email] = useState(user.email);
-  const [issue, setIssue] = useState("");
+  const [issue, setIssue] = useState();
   const [description, setDescription] = useState("");
 
   const dispatch = useDispatch();
@@ -92,6 +92,7 @@ function NewTicket() {
               onChange={(e) => setIssue(e.target.value)}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
+              <option value=" ">Select a topic</option>
               <option value="cirriculum">Cirriculum</option>
               <option value="teacher">Teacher</option>
               <option value="student">Student</option>
