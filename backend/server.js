@@ -17,7 +17,7 @@ connectDB();
 // Serve Frontend
 if (process.env.NODE_ENV === "production") {
   // Set build folder as static
-  app.use(express.static(path.join(__dirname, "../build")));
+  app.use(express.static(path.join(__dirname, "../dist")));
 
   // FIX: below code fixes app crashing on refresh in deployment
   app.get("*", (req, res) => {
