@@ -4,9 +4,11 @@
   "version": "0.0.0",
   "type": "commonjs",
   "scripts": {
-    "dev": "vite",
+    "dev": "concurrently \"vite\" \"npm run server\"",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "node src/backend/server.js",
+    "server": "nodemon src/backend/server.js"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.1",
