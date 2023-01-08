@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getTicket, reset, closeTicket } from "../features/tickets/ticketSlice";
+import { getTicket, closeTicket } from "../features/tickets/ticketSlice";
+import { getComments, reset } from "../features/comments/commentsSlice";
 import { useParams, useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton";
 import { toast } from "react-toastify";
-
+import CommentItem from "../components/CommentItem";
 function Ticket() {
   const { ticket, isLoading, isSuccess, isError, message } = useSelector(
     (state) => state.tickets
+  );
+
+  const { comments, isLoading: commentsIsLoading } = useSelector(
+    (state) => state.comments
   );
 
   const dispatch = useDispatch();
@@ -19,13 +24,15 @@ function Ticket() {
       toast.error(message);
     }
     dispatch(getTicket(ticketId));
+    dispatch(getComments(ticketId));
   }, [isError, message, ticketId]);
+
   const onTicketClose = () => {
     dispatch(closeTicket(ticketId));
     toast.success("ticket closed");
     navigate("/tickets");
   };
-  if (isLoading) {
+  if (isLoading || commentsIsLoading) {
     return <div>Loading</div>;
   }
   if (isError) {
@@ -66,6 +73,7 @@ function Ticket() {
           </div>
         </div>
       </header>
+
       <div>
         {ticket.status === "open" ? (
           <button
@@ -83,15 +91,13 @@ function Ticket() {
             <h2>ticket already closed</h2>
           </button>
         )}
+        <h2 className="mt-8 text-3xl font-bold">Comments</h2>
+
+        {comments.length <= 0 && <h2>no comments</h2>}
+        {comments.map((comment) => (
+          <CommentItem key={comment._id} comment={comment} />
+        ))}
       </div>
-      {/* {ticket !== "closed" && (
-        <button
-          className="w-full px-4 py-2 my-4 font-bold text-white bg-red-500 border-b-4 border-red-700 rounded hover:bg-red-400 hover:border-red-500"
-          onClick={onTicketClose}
-        >
-          close ticket
-        </button>
-      )} */}
     </div>
   );
 }

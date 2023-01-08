@@ -9,8 +9,9 @@ const {
 } = require("../controllers/ticketController");
 
 const protect = require("../middleware/authMiddleware");
-const { update } = require("../models/user");
-
+const commentRouter = require("./commentRoute");
+//reroute to comments
+router.use("/:ticketId/comments", commentRouter);
 router.route("/").get(protect, getTickets).post(protect, createTicket);
 router
   .route("/:id")
