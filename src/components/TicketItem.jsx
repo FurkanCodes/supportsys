@@ -14,7 +14,7 @@ function TicketItem({ ticket }) {
         <td className="px-6 py-4">{ticket.issue}</td>
         <td
           className={`font-bold px-6 py-4 ${
-            ticket.status === "new"
+            ticket.status === "open"
               ? " text-white  bg-green-500"
               : " text-gray-100 bg-red-600"
           }`}

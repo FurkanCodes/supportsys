@@ -10,7 +10,7 @@ const ticketSchema = mongoose.Schema(
     issue: {
       type: String,
       required: [true, "Please select an issue"],
-      enum: ["student", "cirriculum", "teacher"],
+      enum: ["cirriculum", "teacher", "student"],
     },
     description: {
       type: String,
