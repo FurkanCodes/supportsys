@@ -6,7 +6,24 @@ import { useParams, useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton";
 import { toast } from "react-toastify";
 import CommentItem from "../components/CommentItem";
+import Modal from "react-modal";
+import { AiFillCloseCircle, AiOutlineComment, TiTick } from "react-icons/all";
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
+
 function Ticket() {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [commentText, setCommentText] = useState("");
+  Modal.setAppElement("#root");
+
   const { ticket, isLoading, isSuccess, isError, message } = useSelector(
     (state) => state.tickets
   );
@@ -32,6 +49,13 @@ function Ticket() {
     toast.success("ticket closed");
     navigate("/tickets");
   };
+  const onCommentSubmit = (e) => {
+    e.preventDefault();
+    console.log("Submit");
+    closeModal();
+  };
+  const openModal = () => setModalIsOpen(true);
+  const closeModal = () => setModalIsOpen(false);
   if (isLoading || commentsIsLoading) {
     return <div>Loading</div>;
   }
@@ -57,7 +81,7 @@ function Ticket() {
           </span>
         </div>
         <div className="container">
-          <div className="">
+          <div>
             <h3 className="font-bold text-1xl">
               Date Submitted:{" "}
               {new Date(ticket.createdAt).toLocaleString("tr-TR")}
@@ -80,6 +104,7 @@ function Ticket() {
             className="w-full px-4 py-2 my-4 font-bold text-white bg-red-500 border-b-4 border-red-700 rounded hover:bg-red-400 hover:border-red-500"
             onClick={onTicketClose}
           >
+            <AiFillCloseCircle className="inline mr-2" />
             close ticket
           </button>
         ) : (
@@ -91,6 +116,53 @@ function Ticket() {
             <h2>ticket already closed</h2>
           </button>
         )}
+        {ticket.status !== "closed" && (
+          <button
+            className="w-full px-4 py-2 font-bold text-white bg-blue-500 border-b-4 border-blue-700 rounded hover:bg-blue-400 hover:border-blue-500"
+            onClick={openModal}
+          >
+            <AiOutlineComment className="inline mr-2" />
+            add comment{" "}
+          </button>
+        )}
+        <Modal
+          style={customStyles}
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          contentLabel="add comment"
+        >
+          <div className="flow-root">
+            <h2 className="float-left mt-2 font-bold">Add Comment</h2>
+            <button
+              className="float-right px-4 py-2 mb-4 font-bold text-white bg-red-500 border-b-4 border-red-700 rounded hover:bg-red-400 hover:border-red-500"
+              onClick={closeModal}
+            >
+              {" "}
+              <AiFillCloseCircle className="inline " />
+            </button>
+          </div>
+
+          <form onSubmit={onCommentSubmit}>
+            <div>
+              <textarea
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                name="commentText"
+                id="commentText"
+                placeholder="comment"
+                value={commentText}
+                onChange={(e) => setCommentText(e.target.value)}
+              ></textarea>
+            </div>
+            <div className="flow-root">
+              <button
+                className="float-right px-4 py-2 mt-4 font-bold text-white bg-blue-500 border-b-4 border-blue-700 rounded hover:bg-blue-400 hover:border-blue-500"
+                type="submit"
+              >
+                <TiTick className="inline" />
+              </button>
+            </div>
+          </form>
+        </Modal>
         <h2 className="mt-8 text-3xl font-bold">Comments</h2>
 
         {comments.length <= 0 && <h2>no comments</h2>}
