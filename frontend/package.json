@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "concurrently \"vite\" \"npm run server --prefix ../backend\"",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "render-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.1",
