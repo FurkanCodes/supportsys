@@ -16,10 +16,12 @@ connectDB();
 
 if (process.env.NODE_ENV === "production") {
   // Set build folder as static
-  app.use(express.static(path.join(__dirname, "../dist")));
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../", "dist", "index.html"));
+    res.sendFile(
+      path.join(__dirname, "../", "frontend", "build", "index.html")
+    );
   });
 } else {
   app.get("/", (req, res) => {
