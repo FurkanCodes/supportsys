@@ -14,24 +14,18 @@ app.use(express.urlencoded({ extended: false }));
 
 connectDB();
 
-// Serve Frontend
 if (process.env.NODE_ENV === "production") {
   // Set build folder as static
-  app.use(express.static(path.join(__dirname, "../build")));
+  app.use(express.static(path.join(__dirname, "../dist")));
 
-  // FIX: below code fixes app crashing on refresh in deployment
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../index.html"));
+    res.sendFile(path.join(__dirname, "../", "dist", "index.html"));
   });
 } else {
   app.get("/", (req, res) => {
-    res.status(200).json({ message: "Welcome to the Support API" });
+    res.status(200).json({ message: "Welcome to the API" });
   });
 }
-
-app.get("/api/users", (req, res) => {
-  res.json({ message: "Welcome to the Support Desk" });
-});
 
 app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/tickets", require("./routes/ticketRoutes"));

@@ -42,7 +42,7 @@
     "tailwindcss": "^3.2.4",
     "vite": "^4.0.0"
   },
-  "main": "server.js",
+  "main": "",
   "author": "",
   "license": "ISC",
   "description": ""
