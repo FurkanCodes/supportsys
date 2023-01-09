@@ -4,12 +4,9 @@
   "version": "0.0.0",
   "type": "commonjs",
   "scripts": {
-    "dev": "concurrently \"vite\" \"npm run server\"",
+    "dev": "concurrently \"vite\" \"npm run server --prefix ../backend\"",
     "build": "vite build",
-    "preview": "vite preview",
-    "start": "node backend/server.js",
-    "server": "nodemon backend/server.js",
-    "render-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix dist && npm run build --prefix dist"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.1",
